@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "EVO", "EVO\EVO.pyproj", "{A1A4D814-53E6-491C-9C61-E69402CE90D5}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MyBotSimulation", "EVO\MyBotSimulation.pyproj", "{A1A4D814-53E6-491C-9C61-E69402CE90D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
