@@ -1,17 +1,27 @@
 import pybullet as p
+import pybullet_data
 import time
 
-# Connect to PyBullet GUI
-physicsClient = p.connect(p.GUI)
+# Connect to the PyBullet GUI
+p.connect(p.GUI)
 
-# Load the world described in box.sdf
-p.loadSDF("box.sdf")
+# Set the additional search path for PyBullet data
+p.setAdditionalSearchPath(pybullet_data.getDataPath())
 
-# Simulate the world for 1000 steps
-for i in range(10000000000):
+# Add gravity
+p.setGravity(0, 0, -9.8)
+
+# Load the plane (floor)
+planeId = p.loadURDF("plane.urdf")
+
+# Load the world from the SDF file
+p.loadSDF("boxes.sdf")
+
+# Simulate the world for a specified number of steps
+for i in range(1000000000000):
     p.stepSimulation()
-    print(i)
-    time.sleep(1/60)
+    print(i)  # Print the current step count
+    time.sleep(1 / 60)  # Sleep to create a frame rate of 60 FPS
 
-# Disconnect from PyBullet
+# Disconnect from the simulation
 p.disconnect()
