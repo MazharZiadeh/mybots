@@ -1,18 +1,29 @@
 import pyrosim.pyrosim as pyrosim
+import pybullet_data
 
-# Start generating the SDF file
-pyrosim.Start_SDF("boxes.sdf")
+def Create_World():
+    pyrosim.Start_SDF("world.sdf")
+    pyrosim.Send_Cube(name="Ground", pos=[0,0,0], size=[10,10,0.1])
+    pyrosim.End()
 
-# Define the base size and number of blocks
-base_size = 1  # Base size for the first block
-num_blocks = 10  # Number of blocks in the tower
+def Create_Robot():
+    pyrosim.Start_URDF("body.urdf")
+    
+    # Create the torso (root link)
+    pyrosim.Send_Cube(name="Torso", pos=[0,0,1], size=[1,1,1])
+    
+    # Create the back leg
+    pyrosim.Send_Cube(name="BackLeg", pos=[-0.5,0,0], size=[1,1,1])
+    
+    # Create the front leg
+    pyrosim.Send_Cube(name="FrontLeg", pos=[0.5,0,0], size=[1,1,1])
+    
+    # Add joints to connect BackLeg and FrontLeg to the Torso
+    pyrosim.Send_Joint(name="Torso_BackLeg", parent="Torso", child="BackLeg", type="revolute", position=[-0.5,0,1])
+    pyrosim.Send_Joint(name="Torso_FrontLeg", parent="Torso", child="FrontLeg", type="revolute", position=[0.5,0,1])
+    
+    pyrosim.End()
 
-# Loop to create a tower of blocks
-for i in range(num_blocks):
-    size = base_size * (0.9 ** i)  # Reduce size by 10% for each level
-    z_position = size / 2 + i * (base_size * 0.9)  # Adjust z position for the next block
-    # Send the cube with the calculated position and size
-    pyrosim.Send_Cube(name=f"Box{i}", pos=[0, 0, z_position], size=[size, size, size])
-
-# End the SDF generation
-pyrosim.End()
+# Call the functions to create the world and robot
+Create_World()
+Create_Robot()

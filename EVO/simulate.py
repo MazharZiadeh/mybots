@@ -2,26 +2,25 @@ import pybullet as p
 import pybullet_data
 import time
 
-# Connect to the PyBullet GUI
+# Connect to the physics server (GUI)
 p.connect(p.GUI)
 
-# Set the additional search path for PyBullet data
+# Set additional search path to find URDF files
 p.setAdditionalSearchPath(pybullet_data.getDataPath())
-
-# Add gravity
-p.setGravity(0, 0, -9.8)
 
 # Load the plane (floor)
 planeId = p.loadURDF("plane.urdf")
 
-# Load the world from the SDF file
-p.loadSDF("boxes.sdf")
+# Load the robot URDF file
+robotId = p.loadURDF("body.urdf")
 
-# Simulate the world for a specified number of steps
-for i in range(1000000000000):
+# Set gravity
+p.setGravity(0, 0, -9.8)
+
+# Simulate the world
+for i in range(10000):
     p.stepSimulation()
-    print(i)  # Print the current step count
-    time.sleep(1 / 60)  # Sleep to create a frame rate of 60 FPS
+    time.sleep(1/240)  # Slow down the simulation to make it visible
 
-# Disconnect from the simulation
+# Disconnect from the physics server
 p.disconnect()
